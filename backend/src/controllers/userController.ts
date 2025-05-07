@@ -6,11 +6,16 @@ import bcrypt from 'bcrypt';
 import { db } from '../database.ts';
 
 export const registerUser = async (req: Request, res: Response) => {
-  const { name, email, password } = req.body;
+  const { name, email, password, role = 'user' } = req.body;
 
   // Verifica campos obrigatórios
   if (!name || !email || !password) {
     return res.status(400).json({ error: 'Todos os campos são obrigatórios.' });
+  }
+
+  // Verifica se role é válido
+  if (role !== 'user' && role !== 'admin') {
+    return res.status(400).json({ error: 'Tipo de usuário inválido.' });
   }
 
   try {
@@ -25,8 +30,8 @@ export const registerUser = async (req: Request, res: Response) => {
 
     // Insere novo usuário no banco
     const result = await db.query(
-      'INSERT INTO users (name, email, password) VALUES ($1, $2, $3) RETURNING id, name, email',
-      [name, email, hashedPassword]
+      'INSERT INTO users (name, email, password, role) VALUES ($1, $2, $3, $4) RETURNING id, name, email, role',
+      [name, email, hashedPassword, role]
     );
 
     res.status(201).json({ message: 'Usuário criado com sucesso.', user: result.rows[0] });
@@ -67,7 +72,7 @@ export const loginUser = async (req: Request, res: Response) => {
 
     // ✅ Gera o token JWT
     const token = jwt.sign(
-      { id: user.id, name: user.name, email: user.email },
+      { id: user.id, name: user.name, email: user.email, role: user.role },
       process.env.JWT_SECRET as string,
       { expiresIn: process.env.JWT_EXPIRES_IN || '1h' }
     );
@@ -79,7 +84,8 @@ export const loginUser = async (req: Request, res: Response) => {
       user: {
         id: user.id,
         name: user.name,
-        email: user.email
+        email: user.email,
+        role: user.role
       }
     });
 

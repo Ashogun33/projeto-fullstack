@@ -2,6 +2,7 @@ import { Router } from 'express';
 import { healthCheck } from '../controllers/healthCheck.ts';
 import { registerUser, loginUser } from '../controllers/userController.ts';
 import { authenticate } from '../middlewares/authMiddleware.ts';
+import { authorize } from '../middlewares/authorizeMiddleware.ts';
 
 import {
   getTasks,
@@ -24,5 +25,7 @@ router.post('/login', loginUser);
 router.get('/profile', authenticate, (req, res) => {
   res.json({ message: 'Acesso autorizado!', user: req.user });
 });
-
+router.get('/admin', authenticate, authorize('admin'), (req, res) => {
+  res.json({ message: 'Área restrita acessada com sucesso.', user: req.user });
+});
 export default router;
