@@ -1,5 +1,5 @@
 import express from 'express';
-import type { Request, Response } from 'express'; // ✅ é o jeito certo e seguro nesse contexto
+import type { Request, Response } from 'express';
 import { db } from '../database.ts';
 
 // Interface que define uma Tarefa

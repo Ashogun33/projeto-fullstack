@@ -1,4 +1,5 @@
 import express from 'express';
+import 'dotenv/config';
 import { db } from './database.ts';
 import routes from './routes/index.ts';
 
