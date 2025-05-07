@@ -1,99 +1,92 @@
-# Projeto Fullstack Base
 
-Este repositório contém a estrutura inicial de um projeto **Fullstack com Node.js + Express**, voltado para desenvolvimento de APIs modernas com backend escalável e banco de dados PostgreSQL.
+# 🚀 Projeto Fullstack Base – Backend
 
-> 🎯 Propósito: Servir como ponto de partida para aplicações profissionais que podem ser implantadas em ambientes reais e utilizados como portfólio para o mercado internacional.
-
----
-
-## 📦 Tecnologias
-
-- [x] **Node.js** + **Express.js**
-- [x] **TypeScript**
-- [x] **Docker** + **Docker Compose**
-- [x] **PostgreSQL**
-- [x] **pg** (PostgreSQL driver oficial para Node)
-- [x] **Git** + **GitHub**
-- [ ] Autenticação JWT
-- [ ] Testes (automatizados)
-- [ ] CI/CD
-- [ ] Frontend (React)
+Este repositório contém a versão **MVP do backend** do Projeto Fullstack Base. Ele foi desenvolvido com foco em segurança, boas práticas e estrutura profissional, ideal para servir de base real para aplicações modernas e para compor um portfólio técnico.
 
 ---
 
-## 🚀 Como executar
+## 📌 Funcionalidades MVP
+
+- ✅ Cadastro de usuários com senha criptografada (`bcrypt`)
+- ✅ Login com autenticação JWT
+- ✅ Proteção de rotas com middleware (`authenticate`)
+- ✅ Controle de acesso por tipo de usuário (`authorize`)
+- ✅ Rota protegida `/profile`
+- ✅ Rota exclusiva para administradores `/admin`
+- ✅ CRUD de tarefas (em memória ou banco)
+- ✅ Banco de dados PostgreSQL via Docker
+- ✅ Estrutura organizada e modular com TypeScript
+
+---
+
+## 🛠️ Tecnologias Utilizadas
+
+- Node.js
+- Express.js
+- TypeScript
+- PostgreSQL (via Docker)
+- JWT (`jsonwebtoken`)
+- `bcrypt` para senhas
+- Docker e Docker Compose
+- Git e GitHub
+
+---
+
+## 🔐 Segurança Implementada
+
+- Hash seguro de senhas
+- Token JWT com dados essenciais do usuário
+- Middleware para autenticação e autorização
+- `.env` com variáveis de ambiente (exemplo fornecido)
+
+---
+
+## 🚀 Como Executar
 
 ```bash
+# Clone o projeto
 git clone https://github.com/seu-usuario/projeto-fullstack.git
 cd projeto-fullstack/backend
 
-# Instalar dependências
+# Instale as dependências
 npm install
 
-# Subir banco de dados com Docker
+# Crie um arquivo .env com base no .env.example
+cp .env.example .env
+
+# Inicie o banco de dados com Docker
 docker compose up -d
 
-# Rodar servidor de desenvolvimento
+# Rode o servidor em modo desenvolvimento
 npm run dev
 ```
 
 ---
 
-## 🧱 Estrutura de Pastas
+## 🧪 Rotas Importantes
 
-```
-projeto-fullstack/
-└── backend/
-    ├── src/
-    │   ├── controllers/      # Lógica das rotas (taskController.ts)
-    │   ├── routes/           # Definição das rotas
-    │   ├── database.ts       # Conexão com PostgreSQL
-    │   └── server.ts         # Entrada principal da aplicação
-    ├── package.json
-    ├── tsconfig.json
-    └── docker-compose.yml
-```
+- `POST /register` – Cadastro de usuário
+- `POST /login` – Login e geração de token JWT
+- `GET /profile` – Rota protegida (usuário autenticado)
+- `GET /admin` – Rota restrita (admin apenas)
+- `GET /tasks`, `POST /tasks` etc. – CRUD de tarefas
 
 ---
 
-## 📌 Funcionalidades Iniciais
+## 🧠 Documentação Técnica
 
-- [x] Health Check (`GET /`)
-- [x] CRUD de Tarefas:
-  - [x] `GET /tasks` – Listar todas as tarefas
-  - [x] `GET /tasks/:id` – Buscar tarefa por ID
-  - [x] `POST /tasks` – Criar nova tarefa
-  - [x] `PUT /tasks/:id` – Atualizar título ou status
-  - [x] `DELETE /tasks/:id` – Remover tarefa
-- [ ] Cadastro e login de usuários
-- [ ] Autenticação JWT
-- [ ] Testes automatizados
-- [ ] Integração com frontend (React)
+Documentos complementares estão disponíveis no diretório `docs/`, incluindo:
 
----
-
-## 🔁 Exemplo de uso (curl)
-
-```bash
-# Criar tarefa
-curl -X POST http://localhost:3000/tasks \
-  -H "Content-Type: application/json" \
-  -d '{"title": "Estudar PostgreSQL"}'
-
-# Marcar como concluída
-curl -X PUT http://localhost:3000/tasks/1 \
-  -H "Content-Type: application/json" \
-  -d '{"completed": true}'
-
-# Listar todas
-curl http://localhost:3000/tasks
-```
+- `jwt-auth-flow.md`
+- `seguranca-bcrypt.md`
+- `versao-mvp.md`
 
 ---
 
 ## 📄 Licença
 
-Este projeto está licenciado sob os termos da [Licença MIT](LICENSE).  
-Sinta-se livre para usar, modificar e distribuir — com os devidos créditos ao autor.
+Este projeto está licenciado sob os termos da Licença MIT.
 
 ---
+
+> Desenvolvido por **Vandilson A. Jesus** – versão `v1.0.0`
